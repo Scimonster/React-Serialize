@@ -2,7 +2,7 @@
 
 # React Serialize
 
-Serialize and deserialize React components to JSON.
+Serialize and deserialize React components into JSON.
 
 </div>
 
