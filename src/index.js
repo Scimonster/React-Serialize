@@ -14,6 +14,14 @@ export function serialize(element) {
       case "ref":
       case "key":
         return
+      case "type":
+        if (typeof value === 'string') {
+          return value
+        }
+        if (value === React.Fragment) {
+          return '<>'
+        }
+        return value.displayName || value.name
       default:
         return value
     }
@@ -64,7 +72,11 @@ function deserializeElement(element, options = {}, key) {
     throw new Error("Deserialization error: element type must be string")
   }
 
-  type = components[type] || type.toLowerCase()
+  if (type === '<>') {
+    type = React.Fragment
+  } else {
+    type = components[type] || type.toLowerCase()
+  }
 
   if (props.children) {
     props = { ...props, children: deserializeElement(props.children, options) }
